@@ -41,3 +41,6 @@ inquirer = prompt(
         message: 'Enter shape color: '
     }
 )
+    .then(answers => {
+        console.log(answers);
+    })
