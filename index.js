@@ -13,12 +13,12 @@
 // THEN I am shown a 300x200 pixel image that matches the criteria I entered
 
 // import required modules
-const prompt = require('inquirer');
+const inquirer = require('inquirer');
 const fs = require('fs');
-const svg = require('svg.js');
+const render = require('./lib/shapes');
 
 // inquirer prompt to get user input
-inquirer = prompt(
+const questions = [
     {
         type: 'input',
         name: 'text',
@@ -40,7 +40,23 @@ inquirer = prompt(
         name: 'shapeColor',
         message: 'Enter shape color: '
     }
-)
-    .then(answers => {
-        console.log(answers);
+];
+
+// function to render logo to svg file
+function renderSVG(fileName, data) {
+    inquirer.prompt(data).then(answers => {
+        fs.writeFile(fileName, render(answers), (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
     })
+}
+
+// function to initialize app
+function init() {
+    renderSVG("logo.svg", questions);
+}
+
+// function call to initialize app
+init();
