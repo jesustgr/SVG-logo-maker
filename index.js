@@ -15,42 +15,57 @@
 // import required modules
 const inquirer = require('inquirer');
 const fs = require('fs');
-const render = require('./lib/shapes');
+const {circle, triangle, square } = require('./lib/shapes');
 
 // user input
-const questions = [
-    {
-        type: 'input',
-        name: 'text',
-        message: 'Enter text (up to three characters): '
-    },
-    {
-        type: 'input',
-        name: 'textColor',
-        message: 'Enter text color: '
-    },
-    {
-        type: 'list',
-        name: 'shape',
-        message: 'Enter shape: ',
-        choices: ['circle', 'triangle', 'square']
-    },
-    {
-        type: 'input',
-        name: 'shapeColor',
-        message: 'Enter shape color: '
-    }
-];
+function promptUser(){
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'text',
+            message: 'Enter text (up to three characters): '
+        },
+        {
+            type: 'input',
+            name: 'textColor',
+            message: 'Enter text color (color or hex): '
+        },
+        {
+            type: 'list',
+            name: 'shape',
+            message: 'Enter shape: ',
+            choices: ['circle', 'triangle', 'square']
+        },
+        {
+            type: 'input',
+            name: 'shapeColor',
+            message: 'Enter shape color (color or hex): '
+        }
+    ])
+    .then((response)=>{
+        console.log("Success! SVG logo was created");
 
-// function to render logo to svg file
-function renderSVG(fileName, data) {
-    inquirer.prompt(data).then(answers => {
-        fs.writeFile(fileName, render(answers), (err) => {
-            if (err) {
-                console.log(err);
-            }
+        const created = generateLogo(response);
+        fs.writeFile('logo.svg', created, (error) =>{
+            error ? console.log("error generating logo") : console.log("success");
         });
     })
+};
+
+// function to render logo to svg file
+function generateLogo(data){
+    if (data.shape === 'triangle'){
+        const triangle = new triangle(data.text, data.textColor, data.shapeColor);
+        return triangle.render(); //should be a string
+    }
+    if (data.shape === 'square'){
+        const square = new square(data.text, data.textColor, data.shapeColor);
+        return square.render();
+    }
+    if (data.shape === 'circle'){
+        const circle = new circle(data.text, data.textColor, data.shapeColor);
+        return circle.render();
+    }
 }
 
 // function to initialize app
@@ -60,3 +75,7 @@ function init() {
 
 // function call to initialize app
 init();
+
+function init () {
+    promptUser();
+}
