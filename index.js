@@ -17,7 +17,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const render = require('./lib/shapes');
 
-// inquirer prompt to get user input
+// user input
 const questions = [
     {
         type: 'input',
