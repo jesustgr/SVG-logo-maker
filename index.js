@@ -55,16 +55,16 @@ function promptUser(){
 // function to render logo to svg file
 function generateLogo(data){
     if (data.shape === 'triangle'){
-        const triangle = new triangle(data.text, data.textColor, data.shapeColor);
-        return triangle.render(); //should be a string
+        const Triangle = new triangle(data.text, data.textColor, data.shapeColor);
+        return Triangle.render(); //should be a string
     }
     if (data.shape === 'square'){
-        const square = new square(data.text, data.textColor, data.shapeColor);
-        return square.render();
+        const Square = new square(data.text, data.textColor, data.shapeColor);
+        return Square.render();
     }
     if (data.shape === 'circle'){
-        const circle = new circle(data.text, data.textColor, data.shapeColor);
-        return circle.render();
+        const Circle = new circle(data.text, data.textColor, data.shapeColor);
+        return Circle.render();
     }
 }
 
